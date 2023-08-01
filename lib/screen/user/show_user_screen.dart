@@ -189,8 +189,46 @@ class MainBody extends StatelessWidget {
         padding: EdgeInsets.symmetric(
             horizontal: width * 0.03, vertical: height * 0.01),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                helper.userImage.toString() != '0'
+                    ? ClipRRect(
+                  borderRadius: borderWidget(context),
+                  child: GestureDetector(
+                    onTap: () {
+                      navigatorPushWidget(
+                        context,
+                        ImageScreen(
+                          image: File(helper.userImage),
+                          heroTag: 'flutterLogo$index',
+                        ),
+                      );
+                    },
+                    child: Hero(
+                      tag: 'flutterLogo$index',
+                      child: FadeInImage(
+                        placeholder: const AssetImage('assets/loading.gif'),
+                        image: FileImage(File(helper.userImage)),
+                        width: width * 0.25,
+                        height: height * 0.17,
+                        fit: BoxFit.cover,
+                        alignment: Alignment.center,
+                        placeholderFit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                )
+                    : Image.asset(
+                  'assets/no_image.png',
+                  height: width * 0.27,
+                  width: width * 0.2,
+                ),
+              ],
+            ),
+            const SizedBox(width: 12.0),
             Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -202,43 +240,7 @@ class MainBody extends StatelessWidget {
                 ],
               ),
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                helper.userImage.toString() != '0'
-                    ? ClipRRect(
-                        borderRadius: borderWidget(context),
-                        child: GestureDetector(
-                          onTap: () {
-                            navigatorPushWidget(
-                              context,
-                              ImageScreen(
-                                image: File(helper.userImage),
-                                heroTag: 'flutterLogo$index',
-                              ),
-                            );
-                          },
-                          child: Hero(
-                            tag: 'flutterLogo$index',
-                            child: FadeInImage(
-                              placeholder: const AssetImage('assets/loading.gif'),
-                              image: FileImage(File(helper.userImage)),
-                              width: width * 0.25,
-                              height: height * 0.17,
-                              fit: BoxFit.cover,
-                              alignment: Alignment.center,
-                              placeholderFit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      )
-                    : Image.asset(
-                        'assets/no_image.png',
-                        height: width * 0.27,
-                        width: width * 0.2,
-                      ),
-              ],
-            ),
+
           ],
         ),
       ),
